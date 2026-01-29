@@ -12,14 +12,16 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
         ansiColor('Xterm')
     }
-
+    parameters{
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
+    }
     stages {
         stage('Init') {
             steps {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                         sh """
-                            cd 00-VPC
+                            cd 10-sg
                             terraform init -reconfigure
                             terraform plan
                         """
@@ -36,13 +38,13 @@ pipeline {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                         sh """
-                            cd 00-VPC
+                            cd 10-sg
                             terraform apply -auto-approve
                         """
                     }
                 }
             }
-        } 
+        }
     }
     post { 
         always { 

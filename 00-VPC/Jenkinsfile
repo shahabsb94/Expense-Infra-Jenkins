@@ -12,7 +12,9 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
         ansiColor('Xterm')
     }
-
+    parameters{
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
+    }
     stages {
         stage('Init') {
             steps {
@@ -41,6 +43,15 @@ pipeline {
                         """
                     }
                 }
+            }
+        }
+        stage('Trigger SG'){
+            when { 
+                expression { params.ACTION == 'apply'}
+            }
+            steps{
+                build job: '10-sg', parameters: [string(name: 'ACTION', value: 'apply')], 
+                propagate: true
             }
         } 
     }
