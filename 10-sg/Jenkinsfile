@@ -45,7 +45,7 @@ pipeline {
                }
             }
         }
-        /* stage('Parallel Stages') {
+        stage('Parallel Stages') {
             when { 
                 expression { params.ACTION == 'apply'}
             }
@@ -55,7 +55,7 @@ pipeline {
                         build job: '20-bastion', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
-                stage('30-rds') {
+                /* stage('30-rds') {
                     steps {
                         build job: '30-rds', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
@@ -69,9 +69,10 @@ pipeline {
                     steps {
                         build job: '50-ecr', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
-                }
+                } */
             }
         }
+        /*
         stage('Sequential') {
             stages {
                 stage('60-acm') {
