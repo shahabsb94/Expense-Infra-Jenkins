@@ -1,5 +1,5 @@
 resource "aws_instance" "Shabu-Terraform-Instance" {
-  ami                    = "ami-09c813fb71547fc4f" # This is our devops-practice AMI ID
+  ami                    = "ami-0220d79f3f480ecf5" # This is our devops-practice AMI ID
   vpc_security_group_ids = [data.aws_ssm_parameter.bastion_sg_id.value]
   instance_type          = "t3.micro"
   subnet_id   = local.public_subnet_id
