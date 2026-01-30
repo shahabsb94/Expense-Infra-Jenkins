@@ -1,4 +1,4 @@
-resource "aws_instance" "Shabu-Terraform-Instance" {
+resource "aws_instance" "Shabu_Terraform_Instance" {
   ami                    = var.ami_id
   vpc_security_group_ids = [data.aws_ssm_parameter.bastion_sg_id.value]
   instance_type          = var.instance_type

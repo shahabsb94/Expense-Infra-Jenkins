@@ -28,10 +28,10 @@ pipeline {
             }
         }
         stage('Apply') {
-            input {
+            /* input {
                 message "should we continue?"
                 ok "yes, we should."
-            }
+            } */
             steps {
                 script{
                     withAWS(region: 'us-east-1', credentials: 'aws-creds') {
