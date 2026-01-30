@@ -1,16 +1,14 @@
 pipeline {
     agent { label 'AGENT-1' }
-
-    environment {
+    environment { 
         PROJECT = 'EXPENSE'
-        COMPONENT = 'BACKEND'
-        DEPLOY_TO = 'production'
+        COMPONENT = 'BACKEND' 
+        DEPLOY_TO = "production"
     }
-
-    options { 
-        disableConcurrentBuilds() 
+    options {
+        disableConcurrentBuilds()
         timeout(time: 30, unit: 'MINUTES')
-        ansiColor('Xterm')
+        ansiColor('xterm')
     }
     parameters{
         choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
@@ -18,31 +16,33 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-                script{
-                    withAWS(region: 'us-east-1', credentials: 'aws-creds') {
-                        sh """
-                            cd 00-VPC
-                            terraform init -reconfigure
-                            terraform plan
-                        """
-                    }
+               script{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
+                    sh """
+                        cd 00-VPC
+                        terraform init -reconfigure
+                        terraform plan
+                    """
                 }
+                 
+               }
             }
         }
         stage('Apply') {
             input {
-                message "should we continue?"
-                ok "yes, we should."
+                message "Should we continue?"
+                ok "Yes, we should."
             }
             steps {
-                script{
-                    withAWS(region: 'us-east-1', credentials: 'aws-creds') {
-                        sh """
-                            cd 00-VPC
-                            terraform apply -auto-approve
-                        """
-                    }
+               script{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
+                    sh """
+                        cd 00-VPC
+                        terraform apply -auto-approve
+                    """
                 }
+                 
+               }
             }
         }
         stage('Trigger SG'){
@@ -50,10 +50,9 @@ pipeline {
                 expression { params.ACTION == 'apply'}
             }
             steps{
-                build job: '10-sg', parameters: [string(name: 'ACTION', value: 'apply')], 
-                propagate: true
+                build job: '10-sg', parameters: [string(name: 'ACTION', value: 'apply')], propagate: true
             }
-        } 
+        }
     }
     post { 
         always { 
