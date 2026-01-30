@@ -60,13 +60,12 @@ pipeline {
                         build job: '30-rds', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
-                /* 
                 stage('40-eks') {
                     steps {
                         build job: '40-eks', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
                 }
-                stage('50-ecr') {
+                /* stage('50-ecr') {
                     steps {
                         build job: '50-ecr', parameters: [string(name: 'ACTION', value: 'apply')], wait: false
                     }
