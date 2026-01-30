@@ -1,19 +1,9 @@
-/* variable "ami_id" {
-  type        = string
-  default     = "ami-09c813fb71547fc4f"
-  description = "This is an RHEL9 AMI"
-} */
-
 variable "project_name" {
   default = "expense"
 }
 
 variable "environment" {
   default = "dev"
-}
-
-variable "instance_type" {
-  default = "t3.micro"
 }
 
 variable "common_tags" {
