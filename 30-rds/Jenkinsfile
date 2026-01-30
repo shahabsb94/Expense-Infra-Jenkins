@@ -21,6 +21,7 @@ pipeline {
                     sh """
                         cd 30-rds
                         terraform init -reconfigure
+                        terraform init -upgrade
                         terraform plan
                     """
                 }
